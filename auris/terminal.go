@@ -39,11 +39,17 @@ func terminalColor(t TerminalLineType, s Scheme) color.Color {
 }
 
 func NewTerminal(title, code string, lines []TerminalLine, size fyne.Size) fyne.CanvasObject {
+	return NewTerminalState(title, code, lines, size, true)
+}
+
+// NewTerminalState makes cursor visibility explicit so a timer can blink it,
+// while reduced-motion callers can keep it permanently visible.
+func NewTerminalState(title, code string, lines []TerminalLine, size fyne.Size, cursorVisible bool) fyne.CanvasObject {
 	s := DarkScheme()
 	rows := make([]fyne.CanvasObject, 0, len(lines))
 	for i, line := range lines {
 		text := line.Text
-		if i == len(lines)-1 {
+		if i == len(lines)-1 && cursorVisible {
 			text += "  █"
 		}
 		rows = append(rows, DataText(text, 12.5, terminalColor(line.Type, s)))
