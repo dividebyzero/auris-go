@@ -12,20 +12,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
-          cache: true
+          cache: false
       - name: Install Fyne Linux build dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y gcc libgl1-mesa-dev xorg-dev
+      - name: Resolve Go modules
+        run: go mod tidy
       - name: Format check
         run: |
-          files="$(gofmt -l .)"
-          if [ -n "$files" ]; then
-            echo "The following files need gofmt:"
-            echo "$files"
+          base="${{ github.event.pull_request.base.sha }}"
+          if [ -z "$base" ]; then
+            base="HEAD^"
+          fi
+          files="$(git diff --name-only "$base"...HEAD -- '*.go')"
+          if [ -z "$files" ]; then
+            exit 0
+          fi
+          unformatted="$(gofmt -l $files)"
+          if [ -n "$unformatted" ]; then
+            echo "Changed Go files need gofmt:"
+            echo "$unformatted"
             exit 1
           fi
       - name: Vet

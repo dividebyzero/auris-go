@@ -4,7 +4,6 @@ import (
 	"image/color"
 
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/canvas"
 )
 
 // Chamfer describes the signature Auris surface: top-left and bottom-right
@@ -20,7 +19,7 @@ func NewChamfer(fill, stroke color.Color, cut float32) *Chamfer {
 	return &Chamfer{Fill: fill, Stroke: stroke, Cut: cut, StrokeWidth: 1}
 }
 
-func (c *Chamfer) Object(size fyne.Size) fyne.CanvasObject {
+func (c *Chamfer) points(size fyne.Size) []fyne.Position {
 	cut := c.Cut
 	if cut < 0 {
 		cut = 0
@@ -31,18 +30,16 @@ func (c *Chamfer) Object(size fyne.Size) fyne.CanvasObject {
 	if cut > size.Height/2 {
 		cut = size.Height / 2
 	}
-
-	p := canvas.NewPolygon([]fyne.Position{
+	return []fyne.Position{
 		{X: cut, Y: 0},
 		{X: size.Width, Y: 0},
 		{X: size.Width, Y: size.Height - cut},
 		{X: size.Width - cut, Y: size.Height},
 		{X: 0, Y: size.Height},
 		{X: 0, Y: cut},
-	})
-	p.FillColor = c.Fill
-	p.StrokeColor = c.Stroke
-	p.StrokeWidth = c.StrokeWidth
-	p.Resize(size)
-	return p
+	}
+}
+
+func (c *Chamfer) Object(size fyne.Size) fyne.CanvasObject {
+	return polygon(c.points(size), size, c.Fill, c.Stroke, c.StrokeWidth)
 }
