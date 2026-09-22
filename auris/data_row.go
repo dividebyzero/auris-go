@@ -9,7 +9,7 @@ import (
 )
 
 func NewDataRow(label, value string, highlight bool) fyne.CanvasObject {
-	s := DarkScheme()
+	s := CurrentScheme()
 	l := BodyText(strings.ToUpper(label), 12, s.TextMid)
 	valueColor := s.TextBright
 	if highlight {
