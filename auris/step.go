@@ -29,7 +29,7 @@ func NewStepIndicator(step int,state StepState,size float32) fyne.CanvasObject {
 		border,fill,fg,text=s.Danger,withColorAlpha(DangerBright,0x38),s.Danger,"!"
 	}
 	bg:=NewChamfer(fill,border,s.Bevel.XS).Object(fyne.NewSize(size,size))
-	label:=canvas.NewText(text,fg); label.TextSize=size*.42; label.Alignment=fyne.TextAlignCenter
+	label:=DataText(text, size*.42, fg); label.Alignment=fyne.TextAlignCenter
 	label.Resize(fyne.NewSize(size,size)); label.Move(fyne.NewPos(0,size*.24))
 	stack:=container.NewWithoutLayout(bg,label); stack.Resize(fyne.NewSize(size,size))
 	return stack
