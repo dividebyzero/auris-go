@@ -50,10 +50,8 @@ func (r *switchRenderer) Destroy() {}
 
 func (r *switchRenderer) rebuild(size fyne.Size) {
 	scheme := DarkScheme()
-	label := canvas.NewText(r.owner.Label, scheme.TextBright)
-	label.TextSize = 14
-
-	trackSize := fyne.NewSize(48, 24)
+	label := BodyText(r.owner.Label, 14, scheme.TextBright)
+trackSize := fyne.NewSize(48, 24)
 	trackFill, trackBorder, thumb := scheme.SurfaceInset, scheme.Border, scheme.PrimaryDim
 	thumbX := float32(4)
 	status := r.owner.OffLabel
@@ -67,12 +65,11 @@ func (r *switchRenderer) rebuild(size fyne.Size) {
 	trackStack := container.NewWithoutLayout(track, knob)
 	trackStack.Resize(trackSize)
 
-	state := canvas.NewText(strings.ToUpper(status), func() fyne.Color {
+	state := DataText(strings.ToUpper(status), 12, func() fyne.Color {
 		if r.owner.Value { return scheme.PrimaryActive }
 		return scheme.TextMid
 	}())
-	state.TextSize = 12
-	row := container.NewHBox(label, trackStack, state)
+row := container.NewHBox(label, trackStack, state)
 	row.Resize(size)
 	r.objects = []fyne.CanvasObject{row}
 }
