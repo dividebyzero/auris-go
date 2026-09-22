@@ -11,6 +11,7 @@ type Radio struct {
 	widget.BaseWidget
 	Label string
 	Selected, Disabled bool
+	Focused bool
 	OnSelected func()
 }
 
@@ -21,6 +22,10 @@ func NewRadio(label string, selected bool, changed func()) *Radio {
 }
 func (r *Radio) SetSelected(selected bool) { r.Selected=selected; r.Refresh() }
 func (r *Radio) SetDisabled(disabled bool) { r.Disabled=disabled; r.Refresh() }
+func (r *Radio) FocusGained() { r.Focused=true; r.Refresh() }
+func (r *Radio) FocusLost() { r.Focused=false; r.Refresh() }
+func (r *Radio) TypedRune(ch rune) { if ch == ' ' { r.Tapped(nil) } }
+func (r *Radio) TypedKey(e *fyne.KeyEvent) { if e.Name == fyne.KeyReturn || e.Name == fyne.KeyEnter { r.Tapped(nil) } }
 func (r *Radio) Tapped(*fyne.PointEvent) {
 	if r.Disabled { return }
 	r.Selected=true
@@ -38,7 +43,7 @@ func (r *radioRenderer) Destroy() {}
 func (r *radioRenderer) rebuild(size fyne.Size) {
 	s:=DarkScheme()
 	alpha:=uint8(0xff); if r.owner.Disabled { alpha=0x80 }
-	border:=s.BorderBright; if r.owner.Selected { border=s.PrimaryActive }
+	border:=s.BorderBright; if r.owner.Selected || r.owner.Focused { border=s.PrimaryActive }
 	box:=NewChamfer(withColorAlpha(s.SurfaceInset,alpha),withColorAlpha(border,alpha),s.Bevel.XS).Object(fyne.NewSize(18,18))
 	indicator:=container.NewWithoutLayout(box); indicator.Resize(fyne.NewSize(24,24))
 	if r.owner.Selected {
