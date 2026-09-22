@@ -8,7 +8,7 @@ import (
 )
 
 func NewStatCard(label,value,unit,delta string,positiveIsGood bool,size fyne.Size) fyne.CanvasObject {
-	s:=DarkScheme()
+	s:=CurrentScheme()
 	l:=BodyText(strings.ToUpper(label),12,s.TextMid)
 	v:=NewGlowText(value,34,s.PrimaryActive,DepthActive)
 	u:=DataText(unit,14,s.TextMid)
