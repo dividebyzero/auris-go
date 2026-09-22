@@ -10,9 +10,9 @@ import (
 
 func NewStatCard(label, value, unit, delta string, positiveIsGood bool, size fyne.Size) fyne.CanvasObject {
 	s := DarkScheme()
-	l := canvas.NewText(strings.ToUpper(label), s.TextMid); l.TextSize=12
-	v := canvas.NewText(value, s.PrimaryActive); v.TextSize=34
-	u := canvas.NewText(unit, s.TextMid); u.TextSize=14
+	l := BodyText(strings.ToUpper(label), 12, s.TextMid);
+v := DisplayText(value, 34, s.PrimaryActive)
+	u := DataText(unit, 14, s.TextMid)
 	valueRow := container.NewHBox(v,u)
 	items := []fyne.CanvasObject{l,valueRow}
 	if delta != "" {
@@ -22,7 +22,7 @@ func NewStatCard(label, value, unit, delta string, positiveIsGood bool, size fyn
 		arrow := "↑ "
 		if negative { arrow="↓ " }
 		if good { c=s.Success }
-		d := canvas.NewText(arrow+delta,c); d.TextSize=13
+		d := DataText(arrow+delta, 13, c)
 		items=append(items,d)
 	}
 	body := container.NewPadded(container.NewVBox(items...))
