@@ -25,7 +25,7 @@ func headerTick(left bool, c color.Color) fyne.CanvasObject {
 }
 
 func NewPanel(title, code string, body fyne.CanvasObject, size fyne.Size, accent bool) fyne.CanvasObject {
-	s := DarkScheme()
+	s := CurrentScheme()
 	titleColor := s.TextBright
 	if accent {
 		titleColor = s.PrimaryActive
