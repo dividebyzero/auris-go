@@ -53,9 +53,7 @@ func NewProgress(value float64, segments int, label, valueLabel string, variant 
 	bar := container.New(layout.NewGridLayoutWithColumns(segments), cells...)
 	if label == "" && valueLabel == "" { return bar }
 
-	l := canvas.NewText(strings.ToUpper(label), s.PrimaryDim)
-	l.TextSize = 11
-	v := canvas.NewText(valueLabel, s.TextMid)
-	v.TextSize = 11
-	return container.NewVBox(container.NewHBox(l, layout.NewSpacer(), v), bar)
+	l := DataText(strings.ToUpper(label), 11, s.PrimaryDim)
+v := DataText(valueLabel, 11, s.TextMid)
+return container.NewVBox(container.NewHBox(l, layout.NewSpacer(), v), bar)
 }
