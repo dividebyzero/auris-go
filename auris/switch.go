@@ -16,6 +16,7 @@ type Switch struct {
 	Label, OffLabel, OnLabel string
 	Disabled bool
 	Focused bool
+	Motion Motion
 	ThumbProgress float32
 	OnChanged func(bool)
 }
@@ -29,12 +30,14 @@ func NewSwitch(label string, value bool, changed func(bool)) *Switch {
 
 func (s *Switch) SetValue(value bool) {
 	if s.Value == value { return }
-	s.Value = value
-	if value { s.ThumbProgress=1 } else { s.ThumbProgress=0 }
-	s.Refresh()
+	from:=s.ThumbProgress
+	s.Value=value
+	to:=float32(0); if value { to=1 }
+	AnimateValue(s.Motion,DurationNormal,from,to,func(v float32){ s.ThumbProgress=v; s.Refresh() })
 	if s.OnChanged != nil { s.OnChanged(value) }
 }
 
+func (s *Switch) SetReducedMotion(reduced bool) { s.Motion.Reduced=reduced }
 func (s *Switch) SetThumbProgress(progress float32) { if progress<0 { progress=0 }; if progress>1 { progress=1 }; s.ThumbProgress=progress; s.Refresh() }
 func (s *Switch) SetDisabled(disabled bool) { s.Disabled=disabled; s.Refresh() }
 func (s *Switch) FocusGained() { s.Focused=true; s.Refresh() }
