@@ -1,0 +1,28 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Install Fyne Linux build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc libgl1-mesa-dev xorg-dev
+      - name: Build showcase
+        run: go build -tags migrated_fynedo -o auris-showcase ./cmd/showcase
+      - name: Upload release asset
+        run: gh release upload "${{ github.ref_name }}" auris-showcase --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
