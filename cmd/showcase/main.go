@@ -15,9 +15,9 @@ func main() {
 	w := a.NewWindow("Auris Go")
 	w.Resize(fyne.NewSize(920, 760))
 
-	title := canvas.NewText("AURIS // FYNE", auris.TextBright)
+	title := auris.DisplayText("AURIS // FYNE", 26, auris.TextBright)
 	title.TextSize = 26
-	subtitle := canvas.NewText("augmentation-era interface system", auris.TextMid)
+	subtitle := auris.BodyText("augmentation-era interface system", 14, auris.TextMid)
 	subtitle.TextSize = 14
 
 	rows := container.NewVBox(
@@ -37,7 +37,7 @@ func main() {
 	sw.OffLabel, sw.OnLabel = "OFFLINE", "ONLINE"
 	radio := auris.NewRadio("Channel Alpha", true, func() {})
 	selectControl := auris.NewSelect([]string{"ALPHA", "BETA", "GAMMA"}, "ALPHA", func(string) {})
-	scanLabel := canvas.NewText("SUBJECT LOCK", auris.Gold)
+	scanLabel := auris.DataText("SUBJECT LOCK", 14, auris.Gold)
 	scanLabel.Alignment = fyne.TextAlignCenter
 	scan := auris.NewScanBracket(scanLabel, fyne.NewSize(220, 64), 14, 2)
 	hex := auris.NewHexOrnament(fyne.NewSize(180, 90), 18)
