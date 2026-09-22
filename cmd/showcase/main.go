@@ -55,8 +55,17 @@ func main() {
 		{Text: "[augment] body channel attached", Type: auris.TerminalAugment},
 		{Text: "[warn] synthetic demo data", Type: auris.TerminalWarning},
 	}, fyne.NewSize(620, 190))
+	chat := container.NewVBox(
+		auris.DisplayText("CHAT // COMMS", 18, auris.Gold),
+		auris.NewChatBubble(auris.ChatBubble{Author: "Rin", Role: auris.ChatAssistant, Message: "Ready for the next operation.", Timestamp: "13:14:03", Width: 390}),
+		container.NewHBox(
+			container.NewGridWrap(fyne.NewSize(170, 1)),
+			auris.NewChatBubble(auris.ChatBubble{Author: "Zero", Role: auris.ChatUser, Message: "Show me the Auris version.", Timestamp: "13:14:28", Width: 390}),
+		),
+		auris.NewChatBubble(auris.ChatBubble{Author: "Rin", Role: auris.ChatAssistant, State: auris.ChatSending, Timestamp: "13:15:22", Width: 300}),
+	)
 
-	content := container.NewVBox(title, subtitle, panel, progress, badges, stats, notice, steps, sw, radio, selectControl, scan, hex, terminal)
+	content := container.NewVBox(title, subtitle, panel, progress, badges, stats, notice, steps, sw, radio, selectControl, scan, hex, terminal, chat)
 	w.SetContent(container.NewVScroll(container.NewPadded(content)))
 	w.ShowAndRun()
 }
