@@ -1,0 +1,6 @@
+[Details]
+Name = "Auris Go Showcase"
+ID = "cc.dividebyzero.auris.showcase"
+
+[Migrations]
+fyneDo = true
