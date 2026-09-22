@@ -90,11 +90,11 @@ type switchRenderer struct {
 	objects []fyne.CanvasObject
 }
 
-func (r *switchRenderer) Layout(size fyne.Size)           { r.rebuild(size) }
-func (r *switchRenderer) MinSize() fyne.Size              { return fyne.NewSize(210, 32) }
-func (r *switchRenderer) Refresh()                         { r.rebuild(r.owner.Size()); canvas.Refresh(r.owner) }
-func (r *switchRenderer) Objects() []fyne.CanvasObject     { return r.objects }
-func (r *switchRenderer) Destroy()                         {}
+func (r *switchRenderer) Layout(size fyne.Size)       { r.rebuild(size) }
+func (r *switchRenderer) MinSize() fyne.Size          { return fyne.NewSize(210, 32) }
+func (r *switchRenderer) Refresh()                     { r.rebuild(r.owner.Size()); canvas.Refresh(r.owner) }
+func (r *switchRenderer) Objects() []fyne.CanvasObject { return r.objects }
+func (r *switchRenderer) Destroy()                     {}
 
 func (r *switchRenderer) rebuild(size fyne.Size) {
 	s := CurrentScheme()
