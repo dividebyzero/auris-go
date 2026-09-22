@@ -35,8 +35,8 @@ func NewTerminal(title, code string, lines []TerminalLine, size fyne.Size) fyne.
 	for i,line := range lines {
 		text := line.Text
 		if i == len(lines)-1 { text += "  █" }
-		t := canvas.NewText(text,terminalColor(line.Type,s))
-		t.TextSize=12.5
+		t := DataText(text, 12.5, terminalColor(line.Type,s))
+.5
 		rows=append(rows,t)
 	}
 	log := container.NewVBox(rows...)
