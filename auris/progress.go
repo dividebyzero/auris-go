@@ -50,7 +50,7 @@ func NewProgressState(target, rendered float64, segments int, label, valueLabel 
 		segments = 1
 	}
 
-	s := DarkScheme()
+	s := CurrentScheme()
 	active := progressColor(variant, s)
 	filled := int(value*float64(segments) + .5)
 	cells := make([]fyne.CanvasObject, 0, segments)
