@@ -32,6 +32,14 @@ func progressColor(v ProgressVariant, s Scheme) color.Color {
 }
 
 func NewProgress(value float64, segments int, label, valueLabel string, variant ProgressVariant) fyne.CanvasObject {
+	return NewProgressState(value, value, segments, label, valueLabel, variant)
+}
+
+// NewProgressState separates the target value from its rendered value so the
+// caller can animate deterministically using Motion.Progress and Lerp.
+func NewProgressState(target, rendered float64, segments int, label, valueLabel string, variant ProgressVariant) fyne.CanvasObject {
+	value := rendered
+	if target < 0 { target = 0 }; if target > 1 { target = 1 }
 	if value < 0 {
 		value = 0
 	}
