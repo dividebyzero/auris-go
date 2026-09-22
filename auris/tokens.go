@@ -1,0 +1,29 @@
+package auris
+
+import "image/color"
+
+// Canonical Auris dark design primitives.
+var (
+	Void          = color.NRGBA{R: 0x0A, G: 0x0A, B: 0x0C, A: 0xFF}
+	Panel         = color.NRGBA{R: 0x11, G: 0x11, B: 0x15, A: 0xFF}
+	PanelAlt      = color.NRGBA{R: 0x16, G: 0x16, B: 0x1C, A: 0xFF}
+	Border        = color.NRGBA{R: 0x2A, G: 0x25, B: 0x10, A: 0xFF}
+	BorderBright  = color.NRGBA{R: 0x4A, G: 0x40, B: 0x20, A: 0xFF}
+	Amber         = color.NRGBA{R: 0xC8, G: 0x86, B: 0x0A, A: 0xFF}
+	Gold          = color.NRGBA{R: 0xF0, G: 0xA5, B: 0x00, A: 0xFF}
+	Bright        = color.NRGBA{R: 0xFF, G: 0xD0, B: 0x60, A: 0xFF}
+	BrightWhite   = color.NRGBA{R: 0xF0, G: 0xE8, B: 0xD0, A: 0xFF}
+	Slate         = color.NRGBA{R: 0x8A, G: 0xAB, B: 0xB0, A: 0xFF}
+	DangerBright  = color.NRGBA{R: 0xE8, G: 0x48, B: 0x38, A: 0xFF}
+	SuccessBright = color.NRGBA{R: 0x6A, G: 0xB8, B: 0x80, A: 0xFF}
+	TextMid       = color.NRGBA{R: 0xA0, G: 0x90, B: 0x60, A: 0xFF}
+	TextBright    = color.NRGBA{R: 0xE0, G: 0xC0, B: 0x70, A: 0xFF}
+)
+
+const (
+	BevelXS float32 = 3
+	BevelSM float32 = 6
+	BevelMD float32 = 10
+	BevelLG float32 = 14
+	BevelXL float32 = 20
+)
