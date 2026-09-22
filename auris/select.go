@@ -76,7 +76,7 @@ func (r *selectRenderer) Objects() []fyne.CanvasObject { return r.objects }
 func (r *selectRenderer) Destroy() {}
 
 func (r *selectRenderer) rebuild(size fyne.Size) {
-	s:=DarkScheme(); alpha:=uint8(0xff); if r.owner.Disabled { alpha=0x80 }
+	s:=CurrentScheme(); alpha:=uint8(0xff); if r.owner.Disabled { alpha=0x80 }
 	border:=s.BorderBright; if r.owner.Focused || r.owner.Open { border=s.PrimaryActive }
 	bg:=NewChamfer(withColorAlpha(s.SurfaceInset,alpha),withColorAlpha(border,alpha),s.Bevel.MD).Object(fyne.NewSize(size.Width,42))
 	value:=r.owner.Selected; if value=="" { value=r.owner.Placeholder }
