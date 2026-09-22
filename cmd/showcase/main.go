@@ -3,7 +3,6 @@ package main
 import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 
 	"github.com/dividebyzero/auris-go/auris"
@@ -16,9 +15,7 @@ func main() {
 	w.Resize(fyne.NewSize(920, 760))
 
 	title := auris.DisplayText("AURIS // FYNE", 26, auris.TextBright)
-	title.TextSize = 26
 	subtitle := auris.BodyText("augmentation-era interface system", 14, auris.TextMid)
-	subtitle.TextSize = 14
 
 	rows := container.NewVBox(
 		auris.NewDataRow("Core temp", "612 K", false),
