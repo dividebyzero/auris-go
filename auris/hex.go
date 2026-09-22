@@ -5,11 +5,10 @@ import (
 	"math"
 
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 )
 
-func hexagon(center fyne.Position, radius float32, stroke color.Color) *canvas.Polygon {
+func hexagon(center fyne.Position, radius float32, stroke color.Color) fyne.CanvasObject {
 	points := make([]fyne.Position, 6)
 	for i := range points {
 		a := math.Pi/3*float64(i) - math.Pi/6
@@ -18,11 +17,8 @@ func hexagon(center fyne.Position, radius float32, stroke color.Color) *canvas.P
 			center.Y+radius*float32(math.Sin(a)),
 		)
 	}
-	p := canvas.NewPolygon(points)
-	p.FillColor = withColorAlpha(Border, 0)
-	p.StrokeColor = stroke
-	p.StrokeWidth = 1
-	return p
+	size := fyne.NewSize(center.X+radius, center.Y+radius)
+	return polygon(points, size, nil, stroke, 1)
 }
 
 // NewHexOrnament returns a decorative, non-interactive hex cluster.
