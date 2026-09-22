@@ -46,7 +46,7 @@ func (r *radioRenderer) rebuild(size fyne.Size) {
 		pip.Move(fyne.NewPos(5,5))
 		indicator.Add(pip)
 	}
-	label := canvas.NewText(r.owner.Label,s.TextBright); label.TextSize=13
-	row := container.NewHBox(indicator,label); row.Resize(size)
+	label := BodyText(r.owner.Label, 13, s.TextBright);
+row := container.NewHBox(indicator,label); row.Resize(size)
 	r.objects=[]fyne.CanvasObject{row}
 }
