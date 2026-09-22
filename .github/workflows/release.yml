@@ -16,10 +16,13 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
+          cache: false
       - name: Install Fyne Linux build dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y gcc libgl1-mesa-dev xorg-dev
+      - name: Resolve Go modules
+        run: go mod tidy
       - name: Build showcase
         run: go build -tags migrated_fynedo -o auris-showcase ./cmd/showcase
       - name: Upload release asset
