@@ -16,7 +16,7 @@ const (
 )
 
 func NewStepIndicator(step int,state StepState,size float32) fyne.CanvasObject {
-	s:=DarkScheme(); if size<=0 { size=28 }
+	s:=CurrentScheme(); if size<=0 { size=28 }
 	border,fill,fg:=s.Border,s.SurfaceInset,s.TextMid
 	text:=strconv.Itoa(step); glow:=false
 	switch state {
