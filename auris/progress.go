@@ -74,3 +74,13 @@ func NewProgressState(target, rendered float64, segments int, label, valueLabel 
 	v := DataText(valueLabel, 11, s.TextMid)
 	return container.NewVBox(container.NewHBox(l, layout.NewSpacer(), v), bar)
 }
+
+
+// AnimateProgress drives rendered progress toward target using the canonical
+// Auris normal transition. The callback receives render-ready objects.
+func AnimateProgress(m Motion, from, target float64, segments int, label, valueLabel string, variant ProgressVariant, frame func(fyne.CanvasObject)) {
+	if frame==nil { return }
+	AnimateValue(m,DurationNormal,float32(from),float32(target),func(v float32){
+		frame(NewProgressState(target,float64(v),segments,label,valueLabel,variant))
+	})
+}
