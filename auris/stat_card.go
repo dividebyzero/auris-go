@@ -10,7 +10,7 @@ import (
 func NewStatCard(label,value,unit,delta string,positiveIsGood bool,size fyne.Size) fyne.CanvasObject {
 	s:=CurrentScheme()
 	l:=BodyText(strings.ToUpper(label),12,s.TextMid)
-	v:=NewGlowText(value,34,s.PrimaryActive,DepthActive)
+	v:=NewGlowText(value,s.PrimaryActive,34)
 	u:=DataText(unit,14,s.TextMid)
 	valueRow:=container.NewHBox(v,u)
 	items:=[]fyne.CanvasObject{l,valueRow}
