@@ -40,7 +40,7 @@ func NewNotification(title,message,code string,variant NotificationVariant,size 
 }
 
 func NewDismissibleNotification(title,message,code string,variant NotificationVariant,size fyne.Size,onDismiss func()) fyne.CanvasObject {
-	s:=DarkScheme(); accent:=notificationColor(variant,s)
+	s:=CurrentScheme(); accent:=notificationColor(variant,s)
 	bar:=canvas.NewRectangle(accent); bar.SetMinSize(fyne.NewSize(4,1))
 	icon:=DataText(notificationIcon(variant),15,accent)
 	t:=DisplayText(strings.ToUpper(title),14,accent)
