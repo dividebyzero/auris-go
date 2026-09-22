@@ -20,20 +20,27 @@ const (
 
 func badgeColor(v BadgeVariant, s Scheme) color.Color {
 	switch v {
-	case BadgeGold: return s.PrimaryActive
-	case BadgeSlate: return s.Secondary
-	case BadgeDanger: return s.Danger
-	case BadgeSuccess: return s.Success
-	default: return s.PrimaryDim
+	case BadgeGold:
+		return s.PrimaryActive
+	case BadgeSlate:
+		return s.Secondary
+	case BadgeDanger:
+		return s.Danger
+	case BadgeSuccess:
+		return s.Success
+	default:
+		return s.PrimaryDim
 	}
 }
 
 func NewBadge(label string, variant BadgeVariant) fyne.CanvasObject {
 	s := DarkScheme()
 	c := badgeColor(variant, s)
-	t := DataText(strings.ToUpper(label), 11, c)
-padded := container.NewPadded(t)
-	return NewContainer(padded, fyne.NewSize(100, 28), s.Bevel.XS, withColorAlpha(c, 0x1f), withColorAlpha(c, 0x8c))
+	text := DataText(strings.ToUpper(label), 11, c)
+	padded := container.NewPadded(text)
+	min := padded.MinSize()
+	size := fyne.NewSize(min.Width+10, 28)
+	return NewContainer(padded, size, s.Bevel.XS, withColorAlpha(c, 0x1f), withColorAlpha(c, 0x8c))
 }
 
 func withColorAlpha(c color.Color, a uint8) color.Color {
