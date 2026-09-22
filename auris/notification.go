@@ -30,10 +30,10 @@ func NewNotification(title,message,code string,variant NotificationVariant,size 
 	s:=DarkScheme()
 	accent:=notificationColor(variant,s)
 	bar:=canvas.NewRectangle(accent); bar.SetMinSize(fyne.NewSize(4,size.Height))
-	t:=canvas.NewText(strings.ToUpper(title),accent); t.TextSize=14
-	c:=canvas.NewText(code,s.TextMid); c.TextSize=11
+	t:=DisplayText(strings.ToUpper(title), 14, accent)
+	c:=DataText(code, 11, s.TextMid)
 	head:=container.NewHBox(t,layout.NewSpacer(),c)
-	m:=canvas.NewText(message,s.TextMid); m.TextSize=13
+	m:=BodyText(message, 13, s.TextMid)
 	body:=container.NewPadded(container.NewVBox(head,m))
 	row:=container.NewBorder(nil,nil,bar,nil,body)
 	return NewContainer(row,size,s.Bevel.MD,s.SurfacePanel,withColorAlpha(accent,0x73))
