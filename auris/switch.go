@@ -44,6 +44,9 @@ func (s *Switch) SetValue(value bool) {
 	from := s.ThumbProgress
 	s.Value = value
 	AnimateValue(s.Motion, DurationNormal, from, to, func(v float32) { s.ThumbProgress = v; s.Refresh() })
+	// SetValue represents a settled state to callers. Animations may update
+	// asynchronously, but the model value must already be at its endpoint.
+	s.ThumbProgress = to
 	if s.OnChanged != nil {
 		s.OnChanged(value)
 	}
