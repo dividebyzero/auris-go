@@ -16,11 +16,13 @@ type Switch struct {
 	Label, OffLabel, OnLabel string
 	Disabled bool
 	Focused bool
+	ThumbProgress float32
 	OnChanged func(bool)
 }
 
 func NewSwitch(label string, value bool, changed func(bool)) *Switch {
-	s := &Switch{Label:label, Value:value, OffLabel:"OFF", OnLabel:"ON", OnChanged:changed}
+	progress:=float32(0); if value { progress=1 }
+	s := &Switch{Label:label, Value:value, ThumbProgress:progress, OffLabel:"OFF", OnLabel:"ON", OnChanged:changed}
 	s.ExtendBaseWidget(s)
 	return s
 }
@@ -28,10 +30,12 @@ func NewSwitch(label string, value bool, changed func(bool)) *Switch {
 func (s *Switch) SetValue(value bool) {
 	if s.Value == value { return }
 	s.Value = value
+	if value { s.ThumbProgress=1 } else { s.ThumbProgress=0 }
 	s.Refresh()
 	if s.OnChanged != nil { s.OnChanged(value) }
 }
 
+func (s *Switch) SetThumbProgress(progress float32) { if progress<0 { progress=0 }; if progress>1 { progress=1 }; s.ThumbProgress=progress; s.Refresh() }
 func (s *Switch) SetDisabled(disabled bool) { s.Disabled=disabled; s.Refresh() }
 func (s *Switch) FocusGained() { s.Focused=true; s.Refresh() }
 func (s *Switch) FocusLost() { s.Focused=false; s.Refresh() }
@@ -58,11 +62,11 @@ func (r *switchRenderer) rebuild(size fyne.Size) {
 	trackSize:=fyne.NewSize(48,24)
 	trackFill,trackBorder,thumb:=s.SurfaceInset,s.Border,s.PrimaryDim
 	if r.owner.Focused { trackBorder=s.PrimaryActive }
-	thumbX:=float32(4)
+	thumbX:=Lerp(4,28,r.owner.ThumbProgress)
 	status:=r.owner.OffLabel
 	if r.owner.Value {
 		trackFill=withColorAlpha(Gold,0x38)
-		trackBorder,thumb,thumbX,status=s.PrimaryActive,s.PrimaryActive,28,r.owner.OnLabel
+		trackBorder,thumb,status=s.PrimaryActive,s.PrimaryActive,r.owner.OnLabel
 	}
 	track:=newSlant(trackSize,4,withColorAlpha(trackFill,alpha),withColorAlpha(trackBorder,alpha))
 	knob:=newSlant(fyne.NewSize(16,16),3,withColorAlpha(thumb,alpha),withColorAlpha(thumb,alpha))
