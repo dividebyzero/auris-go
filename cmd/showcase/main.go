@@ -41,6 +41,17 @@ func main() {
 	scanLabel.Alignment = fyne.TextAlignCenter
 	scan := auris.NewScanBracket(scanLabel, fyne.NewSize(220, 64), 14, 2)
 	hex := auris.NewHexOrnament(fyne.NewSize(180, 90), 18)
+	stats := container.NewHBox(
+		auris.NewStatCard("Throughput", "847", "req/s", "+12.4%", true, fyne.NewSize(200, 120)),
+		auris.NewStatCard("Latency", "18", "ms", "-3.1%", false, fyne.NewSize(200, 120)),
+	)
+	notice := auris.NewNotification("Link established", "Desktop body channel is responding.", "DL-01", auris.NotificationSuccess, fyne.NewSize(620, 78))
+	steps := container.NewHBox(
+		auris.NewStepIndicator(1, auris.StepComplete, 28),
+		auris.NewStepIndicator(2, auris.StepActive, 28),
+		auris.NewStepIndicator(3, auris.StepInactive, 28),
+		auris.NewStepIndicator(4, auris.StepError, 28),
+	)
 	terminal := auris.NewTerminal("System Log", "LIVE", []auris.TerminalLine{
 		{Text: "[boot] neural interface online", Type: auris.TerminalNormal},
 		{Text: "[ok] telemetry link established", Type: auris.TerminalOK},
@@ -48,7 +59,7 @@ func main() {
 		{Text: "[warn] synthetic demo data", Type: auris.TerminalWarning},
 	}, fyne.NewSize(620, 190))
 
-	content := container.NewVBox(title, subtitle, panel, progress, badges, sw, radio, selectControl, scan, hex, terminal)
+	content := container.NewVBox(title, subtitle, panel, progress, badges, stats, notice, steps, sw, radio, selectControl, scan, hex, terminal)
 	w.SetContent(container.NewVScroll(container.NewPadded(content)))
 	w.ShowAndRun()
 }
