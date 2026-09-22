@@ -36,6 +36,11 @@ func main() {
 	sw := auris.NewSwitch("Primary reactor", true, func(bool) {})
 	sw.OffLabel, sw.OnLabel = "OFFLINE", "ONLINE"
 	radio := auris.NewRadio("Channel Alpha", true, func() {})
+	selectControl := auris.NewSelect([]string{"ALPHA", "BETA", "GAMMA"}, "ALPHA", func(string) {})
+	scanLabel := canvas.NewText("SUBJECT LOCK", auris.Gold)
+	scanLabel.Alignment = fyne.TextAlignCenter
+	scan := auris.NewScanBracket(scanLabel, fyne.NewSize(220, 64), 14, 2)
+	hex := auris.NewHexOrnament(fyne.NewSize(180, 90), 18)
 	terminal := auris.NewTerminal("System Log", "LIVE", []auris.TerminalLine{
 		{Text: "[boot] neural interface online", Type: auris.TerminalNormal},
 		{Text: "[ok] telemetry link established", Type: auris.TerminalOK},
@@ -43,7 +48,7 @@ func main() {
 		{Text: "[warn] synthetic demo data", Type: auris.TerminalWarning},
 	}, fyne.NewSize(620, 190))
 
-	content := container.NewVBox(title, subtitle, panel, progress, badges, sw, radio, terminal)
+	content := container.NewVBox(title, subtitle, panel, progress, badges, sw, radio, selectControl, scan, hex, terminal)
 	w.SetContent(container.NewVScroll(container.NewPadded(content)))
 	w.ShowAndRun()
 }
