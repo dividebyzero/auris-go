@@ -14,16 +14,11 @@ func NewPanel(title, code string, body fyne.CanvasObject, size fyne.Size, accent
 	titleColor := s.TextBright
 	if accent { titleColor = s.PrimaryActive }
 
-	left := canvas.NewText("⌐", s.PrimaryDim)
-	left.TextSize = 15
-	heading := canvas.NewText(strings.ToUpper(title), titleColor)
-	heading.TextSize = 15
-	right := canvas.NewText("¬", s.PrimaryDim)
-	right.TextSize = 15
-	status := canvas.NewText(code, s.TextMid)
-	status.TextSize = 11
-
-	header := container.NewHBox(left, heading, right, layout.NewSpacer(), status)
+	left := DisplayText("⌐", 15, s.PrimaryDim)
+heading := DisplayText(strings.ToUpper(title), 15, titleColor)
+right := DisplayText("¬", 15, s.PrimaryDim)
+status := DataText(code, 11, s.TextMid)
+header := container.NewHBox(left, heading, right, layout.NewSpacer(), status)
 	inside := container.NewPadded(container.NewVBox(header, NewRule(size.Width), body))
 	return NewPanelSurface(inside, size, accent)
 }
