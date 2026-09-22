@@ -1,6 +1,7 @@
 package auris
 
 import (
+	"image/color"
 	"strings"
 
 	"fyne.io/fyne/v2"
@@ -65,7 +66,7 @@ trackSize := fyne.NewSize(48, 24)
 	trackStack := container.NewWithoutLayout(track, knob)
 	trackStack.Resize(trackSize)
 
-	state := DataText(strings.ToUpper(status), 12, func() fyne.Color {
+	state := DataText(strings.ToUpper(status), 12, func() color.Color {
 		if r.owner.Value { return scheme.PrimaryActive }
 		return scheme.TextMid
 	}())
