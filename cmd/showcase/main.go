@@ -5,7 +5,6 @@ import (
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
 
 	"github.com/dividebyzero/auris-go/auris"
 )
@@ -22,20 +21,21 @@ func main() {
 	subtitle := canvas.NewText("augmentation-era interface system", auris.TextMid)
 	subtitle.TextSize = 14
 
-	progress := widget.NewProgressBar()
-	progress.SetValue(.68)
+	rows := container.NewVBox(
+		auris.NewDataRow("Core temp", "612 K", false),
+		auris.NewDataRow("Output", "99.2 %", true),
+		auris.NewDataRow("Status", "NOMINAL", false),
+	)
+	panel := auris.NewPanel("Reactor Core", "RC-09", rows, fyne.NewSize(620, 190), true)
 
-	content := container.NewVBox(
-		title,
-		subtitle,
-		widget.NewSeparator(),
-		widget.NewLabel("REACTOR CORE"),
-		progress,
-		widget.NewCheck("AUTO-STABILIZER", nil),
-		widget.NewButton("INITIALIZE", func() {}),
-		widget.NewEntry(),
+	progress := auris.NewProgress(.68, 20, "Shield integrity", "68 / 100", auris.ProgressPrimary)
+	badges := container.NewHBox(
+		auris.NewBadge("online", auris.BadgeSuccess),
+		auris.NewBadge("armed", auris.BadgeGold),
+		auris.NewBadge("warning", auris.BadgeDanger),
 	)
 
+	content := container.NewVBox(title, subtitle, panel, progress, badges)
 	w.SetContent(container.NewPadded(content))
 	w.ShowAndRun()
 }
