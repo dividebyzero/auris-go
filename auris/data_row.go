@@ -11,14 +11,12 @@ import (
 
 func NewDataRow(label, value string, highlight bool) fyne.CanvasObject {
 	s := DarkScheme()
-	l := canvas.NewText(strings.ToUpper(label), s.TextMid)
-	l.TextSize = 12
-	valueColor := s.TextBright
+	l := BodyText(strings.ToUpper(label), 12, s.TextMid)
+valueColor := s.TextBright
 	if highlight {
 		valueColor = s.Highlight
 	}
-	v := canvas.NewText(value, valueColor)
-	v.TextSize = 13
-	row := container.NewHBox(l, layout.NewSpacer(), v)
+	v := DataText(value, 13, valueColor)
+row := container.NewHBox(l, layout.NewSpacer(), v)
 	return container.NewVBox(row, NewRule(1))
 }
