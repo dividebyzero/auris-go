@@ -1,6 +1,7 @@
 package auris
 
 import (
+	"image/color"
 	"strings"
 
 	"fyne.io/fyne/v2"
@@ -17,7 +18,7 @@ const (
 	NotificationError
 )
 
-func notificationColor(v NotificationVariant,s Scheme) fyne.Color {
+func notificationColor(v NotificationVariant,s Scheme) color.Color {
 	switch v {
 	case NotificationSuccess: return s.Success
 	case NotificationError: return s.Danger
