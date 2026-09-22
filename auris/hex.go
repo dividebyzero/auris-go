@@ -1,6 +1,7 @@
 package auris
 
 import (
+	"image/color"
 	"math"
 
 	"fyne.io/fyne/v2"
@@ -8,7 +9,7 @@ import (
 	"fyne.io/fyne/v2/container"
 )
 
-func hexagon(center fyne.Position, radius float32, stroke fyne.Color) *canvas.Polygon {
+func hexagon(center fyne.Position, radius float32, stroke color.Color) *canvas.Polygon {
 	points := make([]fyne.Position, 6)
 	for i := range points {
 		a := math.Pi/3*float64(i) - math.Pi/6
