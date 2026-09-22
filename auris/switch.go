@@ -58,7 +58,7 @@ func (r *switchRenderer) Objects() []fyne.CanvasObject { return r.objects }
 func (r *switchRenderer) Destroy() {}
 
 func (r *switchRenderer) rebuild(size fyne.Size) {
-	s:=DarkScheme()
+	s:=CurrentScheme()
 	alpha:=uint8(0xff)
 	if r.owner.Disabled { alpha=0x80 }
 	label:=BodyText(r.owner.Label,14,withColorAlpha(s.TextBright,alpha))
