@@ -12,13 +12,13 @@ import (
 
 type Switch struct {
 	widget.BaseWidget
-	Value                   bool
+	Value                    bool
 	Label, OffLabel, OnLabel string
-	Disabled                bool
-	Focused                 bool
-	Motion                  Motion
-	ThumbProgress           float32
-	OnChanged               func(bool)
+	Disabled                 bool
+	Focused                  bool
+	Motion                   Motion
+	ThumbProgress            float32
+	OnChanged                func(bool)
 }
 
 func NewSwitch(label string, value bool, changed func(bool)) *Switch {
@@ -37,17 +37,13 @@ func (s *Switch) SetValue(value bool) {
 		to = 1
 	}
 	if s.Value == value {
-		// SetValue also settles any in-flight/manual thumb position.
 		s.ThumbProgress = to
 		s.Refresh()
 		return
 	}
 	from := s.ThumbProgress
 	s.Value = value
-	AnimateValue(s.Motion, DurationNormal, from, to, func(v float32) {
-		s.ThumbProgress = v
-		s.Refresh()
-	})
+	AnimateValue(s.Motion, DurationNormal, from, to, func(v float32) { s.ThumbProgress = v; s.Refresh() })
 	if s.OnChanged != nil {
 		s.OnChanged(value)
 	}
@@ -90,8 +86,8 @@ type switchRenderer struct {
 	objects []fyne.CanvasObject
 }
 
-func (r *switchRenderer) Layout(size fyne.Size)       { r.rebuild(size) }
-func (r *switchRenderer) MinSize() fyne.Size          { return fyne.NewSize(210, 32) }
+func (r *switchRenderer) Layout(size fyne.Size)        { r.rebuild(size) }
+func (r *switchRenderer) MinSize() fyne.Size           { return fyne.NewSize(210, 32) }
 func (r *switchRenderer) Refresh()                     { r.rebuild(r.owner.Size()); canvas.Refresh(r.owner) }
 func (r *switchRenderer) Objects() []fyne.CanvasObject { return r.objects }
 func (r *switchRenderer) Destroy()                     {}
