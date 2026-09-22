@@ -30,12 +30,12 @@ func NewDepthContainer(content fyne.CanvasObject,size fyne.Size,cut float32,fill
 }
 
 func NewInsetContainer(content fyne.CanvasObject, size fyne.Size) fyne.CanvasObject {
-	s := DarkScheme()
+	s := CurrentScheme()
 	return NewContainer(content, size, s.Bevel.MD, s.SurfaceInset, s.BorderBright)
 }
 
 func NewPanelSurface(content fyne.CanvasObject, size fyne.Size, accent bool) fyne.CanvasObject {
-	s := DarkScheme()
+	s := CurrentScheme()
 	if accent {
 		return NewDepthContainer(content,size,s.Bevel.LG,s.SurfacePanel,s.PrimaryActive,DepthSubtle)
 	}
