@@ -15,6 +15,7 @@ type Switch struct {
 	Value bool
 	Label, OffLabel, OnLabel string
 	Disabled bool
+	Focused bool
 	OnChanged func(bool)
 }
 
@@ -32,6 +33,10 @@ func (s *Switch) SetValue(value bool) {
 }
 
 func (s *Switch) SetDisabled(disabled bool) { s.Disabled=disabled; s.Refresh() }
+func (s *Switch) FocusGained() { s.Focused=true; s.Refresh() }
+func (s *Switch) FocusLost() { s.Focused=false; s.Refresh() }
+func (s *Switch) TypedRune(r rune) { if r == ' ' { s.Tapped(nil) } }
+func (s *Switch) TypedKey(e *fyne.KeyEvent) { if e.Name == fyne.KeyReturn || e.Name == fyne.KeyEnter { s.Tapped(nil) } }
 func (s *Switch) Tapped(*fyne.PointEvent) {
 	if s.Disabled { return }
 	s.SetValue(!s.Value)
@@ -52,6 +57,7 @@ func (r *switchRenderer) rebuild(size fyne.Size) {
 	label:=BodyText(r.owner.Label,14,withColorAlpha(s.TextBright,alpha))
 	trackSize:=fyne.NewSize(48,24)
 	trackFill,trackBorder,thumb:=s.SurfaceInset,s.Border,s.PrimaryDim
+	if r.owner.Focused { trackBorder=s.PrimaryActive }
 	thumbX:=float32(4)
 	status:=r.owner.OffLabel
 	if r.owner.Value {
