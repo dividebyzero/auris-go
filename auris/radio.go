@@ -41,7 +41,7 @@ func (r *radioRenderer) Refresh() { r.rebuild(r.owner.Size()); canvas.Refresh(r.
 func (r *radioRenderer) Objects() []fyne.CanvasObject { return r.objects }
 func (r *radioRenderer) Destroy() {}
 func (r *radioRenderer) rebuild(size fyne.Size) {
-	s:=DarkScheme()
+	s:=CurrentScheme()
 	alpha:=uint8(0xff); if r.owner.Disabled { alpha=0x80 }
 	border:=s.BorderBright; if r.owner.Selected || r.owner.Focused { border=s.PrimaryActive }
 	box:=NewChamfer(withColorAlpha(s.SurfaceInset,alpha),withColorAlpha(border,alpha),s.Bevel.XS).Object(fyne.NewSize(18,18))
