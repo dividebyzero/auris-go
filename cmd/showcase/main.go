@@ -12,9 +12,8 @@ import (
 func main() {
 	a := app.New()
 	a.Settings().SetTheme(auris.NewTheme())
-
 	w := a.NewWindow("Auris Go")
-	w.Resize(fyne.NewSize(920, 640))
+	w.Resize(fyne.NewSize(920, 760))
 
 	title := canvas.NewText("AURIS // FYNE", auris.TextBright)
 	title.TextSize = 26
@@ -27,7 +26,6 @@ func main() {
 		auris.NewDataRow("Status", "NOMINAL", false),
 	)
 	panel := auris.NewPanel("Reactor Core", "RC-09", rows, fyne.NewSize(620, 190), true)
-
 	progress := auris.NewProgress(.68, 20, "Shield integrity", "68 / 100", auris.ProgressPrimary)
 	badges := container.NewHBox(
 		auris.NewBadge("online", auris.BadgeSuccess),
@@ -35,7 +33,17 @@ func main() {
 		auris.NewBadge("warning", auris.BadgeDanger),
 	)
 
-	content := container.NewVBox(title, subtitle, panel, progress, badges)
-	w.SetContent(container.NewPadded(content))
+	sw := auris.NewSwitch("Primary reactor", true, func(bool) {})
+	sw.OffLabel, sw.OnLabel = "OFFLINE", "ONLINE"
+	radio := auris.NewRadio("Channel Alpha", true, func() {})
+	terminal := auris.NewTerminal("System Log", "LIVE", []auris.TerminalLine{
+		{Text: "[boot] neural interface online", Type: auris.TerminalNormal},
+		{Text: "[ok] telemetry link established", Type: auris.TerminalOK},
+		{Text: "[augment] body channel attached", Type: auris.TerminalAugment},
+		{Text: "[warn] synthetic demo data", Type: auris.TerminalWarning},
+	}, fyne.NewSize(620, 190))
+
+	content := container.NewVBox(title, subtitle, panel, progress, badges, sw, radio, terminal)
+	w.SetContent(container.NewVScroll(container.NewPadded(content)))
 	w.ShowAndRun()
 }
