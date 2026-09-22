@@ -32,9 +32,8 @@ func badgeColor(v BadgeVariant, s Scheme) color.Color {
 func NewBadge(label string, variant BadgeVariant) fyne.CanvasObject {
 	s := DarkScheme()
 	c := badgeColor(variant, s)
-	t := canvas.NewText(strings.ToUpper(label), c)
-	t.TextSize = 11
-	padded := container.NewPadded(t)
+	t := DataText(strings.ToUpper(label), 11, c)
+padded := container.NewPadded(t)
 	return NewContainer(padded, fyne.NewSize(100, 28), s.Bevel.XS, withColorAlpha(c, 0x1f), withColorAlpha(c, 0x8c))
 }
 
