@@ -12,23 +12,34 @@ import (
 func NewContainer(content fyne.CanvasObject, size fyne.Size, cut float32, fill, border color.Color) fyne.CanvasObject {
 	surface := NewChamfer(fill, border, cut).Object(size)
 	content.Resize(size)
-	return container.NewStack(surface, content)
+	stack:=container.NewWithoutLayout(surface,content)
+	stack.Resize(size)
+	return stack
 }
 
-// NewInsetContainer creates the common inset HUD surface.
+// NewDepthContainer adds the tight Auris glow convention without changing the
+// caller's requested content size.
+func NewDepthContainer(content fyne.CanvasObject,size fyne.Size,cut float32,fill,border color.Color,depth Depth) fyne.CanvasObject {
+	spread:=depth.Spread
+	glow:=NewGlowSurface(size,cut,fill,border,depth)
+	content.Move(fyne.NewPos(spread,spread))
+	content.Resize(size)
+	stack:=container.NewWithoutLayout(glow,content)
+	stack.Resize(fyne.NewSize(size.Width+spread*2,size.Height+spread*2))
+	return stack
+}
+
 func NewInsetContainer(content fyne.CanvasObject, size fyne.Size) fyne.CanvasObject {
 	s := DarkScheme()
 	return NewContainer(content, size, s.Bevel.MD, s.SurfaceInset, s.BorderBright)
 }
 
-// NewPanelSurface creates the common panel HUD surface.
 func NewPanelSurface(content fyne.CanvasObject, size fyne.Size, accent bool) fyne.CanvasObject {
 	s := DarkScheme()
-	border := s.BorderBright
 	if accent {
-		border = s.PrimaryActive
+		return NewDepthContainer(content,size,s.Bevel.LG,s.SurfacePanel,s.PrimaryActive,DepthSubtle)
 	}
-	return NewContainer(content, size, s.Bevel.LG, s.SurfacePanel, border)
+	return NewContainer(content,size,s.Bevel.LG,s.SurfacePanel,s.BorderBright)
 }
 
 func NewRule(width float32) fyne.CanvasObject {
