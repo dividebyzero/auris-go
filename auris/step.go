@@ -29,7 +29,7 @@ func NewStepIndicator(step int,state StepState,size float32) fyne.CanvasObject {
 	}
 	bg:=NewChamfer(fill,border,s.Bevel.XS).Object(fyne.NewSize(size,size))
 	var label fyne.CanvasObject
-	if glow { label=NewGlowText(text,size*.42,fg,DepthSubtle) } else {
+	if glow { label=NewGlowText(text,fg,size*.42) } else {
 		t:=DataText(text,size*.42,fg); t.Alignment=fyne.TextAlignCenter; label=t
 	}
 	label.Resize(fyne.NewSize(size,size)); label.Move(fyne.NewPos(0,size*.24))
