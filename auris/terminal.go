@@ -45,7 +45,7 @@ func NewTerminal(title, code string, lines []TerminalLine, size fyne.Size) fyne.
 // NewTerminalState makes cursor visibility explicit so a timer can blink it,
 // while reduced-motion callers can keep it permanently visible.
 func NewTerminalState(title, code string, lines []TerminalLine, size fyne.Size, cursorVisible bool) fyne.CanvasObject {
-	s := DarkScheme()
+	s := CurrentScheme()
 	rows := make([]fyne.CanvasObject, 0, len(lines))
 	for i, line := range lines {
 		text := line.Text
