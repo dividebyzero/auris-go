@@ -1,12 +1,13 @@
 package auris
 
 import (
+	"image/color"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 )
 
-func line(pos fyne.Position, size fyne.Size, c fyne.Color, width float32) *canvas.Rectangle {
+func line(pos fyne.Position, size fyne.Size, c color.Color, width float32) *canvas.Rectangle {
 	r := canvas.NewRectangle(c)
 	r.Move(pos)
 	r.Resize(size)
