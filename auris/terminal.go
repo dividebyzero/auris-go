@@ -1,6 +1,7 @@
 package auris
 
 import (
+	"image/color"
 	"strings"
 
 	"fyne.io/fyne/v2"
@@ -19,7 +20,7 @@ const (
 
 type TerminalLine struct { Text string; Type TerminalLineType }
 
-func terminalColor(t TerminalLineType, s Scheme) fyne.Color {
+func terminalColor(t TerminalLineType, s Scheme) color.Color {
 	switch t {
 	case TerminalOK: return s.Success
 	case TerminalError: return s.Danger
